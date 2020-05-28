@@ -1,20 +1,128 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="http://maps.googleapis.com/maps/api/js?sensor=false"></script>
+	<script src="http://localhost:5000/Javascript/jquery.js"></script>
+	<link rel='stylesheet' type='text/css' href="http://localhost:5000/Style/Stylesheet.css">
+
+
+
 </head>
 <body>
-	<h1>Introducir restaurante</h1>
-	<form action="/restaurantes" method="post">
-		<input type="text" name="name"> Nom
+	<div class="form-box l-col-wrap">
+  <div class="l-col form-box__content">
+    <h1 class="form-box__title">Introduce tu restaurante</h1>
+    <div class="u-auto-format-text">
+      <div class="div-category">
+      	<h3>Categorias:</h3>
+      </div>
+			<hr>
+			<div id=timetable>
+				<h3>Horarios:</h3>
+				<div class="day" id="1">
+					<label class="d-label">Lunes </label>
+					<label class="open"><b>[</b> Abre:</label>
+					<input class="time-input" value="12:00" type="text"></input>
+					<label class="close">| Cierra:</label>
+					<input class="time-input" value="00:00" type="text"></input>
+					<label class="close"><b>]</b> Cerrado </label>
+					<input type="checkbox" class="check"></input>
+				</div>
+				<div class="day" id="2">
+					<label class="d-label">Martes </label>
+					<label class="open"><b>[</b> Abre:</label>
+					<input class="time-input" value="12:00" type="text"></input>
+					<label class="close">| Cierra:</label>
+					<input class="time-input" value="00:00" type="text"></input>
+					<label class="close"><b>]</b> Cerrado </label>
+					<input type="checkbox" class="check"></input>
+				</div>
+				<div class="day" id="3">
+					<label class="d-label">Miercoles </label>
+					<label class="open"><b>[</b> Abre:</label>
+					<input class="time-input" value="12:00" type="text"></input>
+					<label class="close">| Cierra:</label>
+					<input class="time-input" value="00:00" type="text"></input>
+					<label class="close"><b>]</b> Cerrado </label>
+					<input type="checkbox" class="check"></input>
+				</div>
+				<div class="day" id="4">
+					<label class="d-label">Jueves </label>
+					<label class="open"><b>[</b> Abre:</label>
+					<input class="time-input" value="12:00" type="text"></input>
+					<label class="close">| Cierra:</label>
+					<input class="time-input" value="00:00" type="text"></input>
+					<label class="close"><b>]</b> Cerrado </label>
+					<input type="checkbox" class="check"></input>
+				</div>
+				<div class="day" id="5">
+					<label class="d-label">Viernes </label>
+					<label class="open"><b>[</b> Abre:</label>
+					<input class="time-input" value="12:00" type="text"></input>
+					<label class="close">| Cierra:</label>
+					<input class="time-input" value="00:00" type="text"></input>
+					<label class="close"><b>]</b> Cerrado </label>
+					<input type="checkbox" class="check"></input>
+				</div>
+				<div class="day" id="6">
+					<label class="d-label">Sabado </label>
+					<label class="open"><b>[</b> Abre:</label>
+					<input class="time-input" value="12:00" type="text"></input>
+					<label class="close">| Cierra:</label>
+					<input class="time-input" value="00:00" type="text"></input>
+					<label class="close"><b>]</b> Cerrado </label>
+					<input type="checkbox" class="check"></input>
+				</div>
+				<div class="day" id="7">
+					<label class="d-label">Domingo </label>
+					<label class="open"><b>[</b> Abre:</label>
+					<input class="time-input" value="12:00" type="text"></input>
+					<label class="close">| Cierra:</label>
+					<input class="time-input" value="00:00" type="text"></input>
+					<label class="close"><b>]</b> Cerrado </label>
+					<input type="checkbox" class="check"></input>
+				</div>
+
+
+			</div>
+			<hr>
+			<div class="map-container">
+				<h3>Localización:</h3>
+				<label><b>Lat:</b> </label><label id="lat"></label>
+				<label>  | <b>Lon:</b> </label><label id="lon"></label>
+	      <div id="map-canvas">
+				</div>
+			</div>
+    </div>
+  </div>
+  <div class="l-col form-box__form">
+    <form id="restaurante" action="/restaurantes" method="post">
+    	<label for="name" class="form__label">Nombre</label>
+		<input type="text" name="name" class="form__field" placeholder="Wonderland">
+		<label for="poblation" class="form__label">Poblacion</label>
+		<input type="text" name="poblation" class="form__field" placeholder="Barcelona">
+		<label for="location" class="form__label">Direccion</label>
+		<input type="text" name="location" class="form__field" placeholder="Calle de las Maravillas">
+		<label for="pnumber" class="form__label">Telefono</label>
+		<input type="text" name="pnumber" class="form__field" placeholder="993456234">
+		<label for="cp" class="form__label">Codigo Postal</label>
+		<input type="text" name="cp" class="form__field" placeholder="08940">
+		<label for="category" class="form__label">Categoria</label>
+		<input type="text"  id="category" class="form__field" placeholder="Pizzeria">
+		<input type="text" name="category" id="hidden-category"style="display:none;">
+		<input type="text" name="schedule" id="hidden-schedule"style="display:none;">
+		<input type="text" name="coordinates" id="hidden-coordinates"style="display:none;">
+		<button id="actualizar" class="button">+</button>
 		<br>
-		<input type="text" name="location"> Direccio
-		<br>
-		<input type="text" name="pnumber"> Telefon 
-		<br>
-		<input type="text" name="cp"> Codi Postal
-		<br>
-		<input type="submit" name="Enviar">
+		<input type="submit" class="form__button button" name="Enviar">
 	</form>
+
+  </div>
+</div>
+
+
+
+
 </body>
 </html>

@@ -2,16 +2,35 @@
 <html>
 <head>
 	<title></title>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+	<script src="http://localhost:5000/Javascript/menuJquery.js"></script>
+	<link rel='stylesheet' type='text/css' href="http://localhost:5000/Style/menuStyle.css">
+
 </head>
 <body>
+
+<div class="hidden-msg" style="display:none">
 	<% if (msg=="OK"){ %>
-	<h2>Registro Añadido</h2>
+	<label id="just-ok">Registro añadido correctamente</label>
 	<%}else if(msg="KO"){%>
-	<h2>ERROR: No se puede insertar</h2>
+	<label id="just-ko">ERROR: No se pudo insertar</label>
 
 <%}else{%>
-<h2>ERROR: <%=msg %></h2>
+<label id="error-message">ERROR: <%=msg %></label>
 <%}%>
+</div>
+<div class="central-div">
+	<div class="l-col form-box__form">
+	<form id="menu" class=""  method="post">
+		<h1> Menú </h1>
+		<input type="text" name="menuAction" style="display:none;">
+		<button id="llistat" class="button">Listado</button>
+		<button id="crea" class="button">Crear</button>
+		<button id="busca" class="button">Buscar/Gestionar</button>
+	</form>
+</div>
+
+</div>
 
 
 </body>
