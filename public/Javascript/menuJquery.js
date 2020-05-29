@@ -20,19 +20,20 @@ $(":button").click(function(){
   var idClickEl=$(this).attr('id');
   if (idClickEl=="busca") {
   	buscar();
-  }
-  else if (idClickEl=="crea") {}{
-  	$("#menuAction").value("crea");
+  }else{
+  	if (idClickEl=="crea") {
+  	$("#menuAction").val("crea");
+  	}
+  	else if (idClickEl=="enviarBusqueda") {
+  	$("#menuAction").val("busca");
+  	}
+  	else if (idClickEl=="llistat") {
+  	$("#menuAction").val("llista");
+  	}
   	setTimeout(function(){$("#menu").submit()},1000);
+
   }
-  else if (idClickEl=="enviarBusqueda") {}{
-  	$("#menuAction").value("busca");
-  	setTimeout(function(){$("#menu").submit()},1000);
-  }
-  else if (idClickEl=="llistat") {}{
-  	$("#menuAction").value("llista");
-  	setTimeout(function(){$("#menu").submit()},1000);
-  }
+  
   
   //crear()
 })

@@ -2,13 +2,76 @@
 <html>
 <head>
 	<title></title>
+		<link rel='stylesheet' type='text/css' href="http://localhost:5000/Style/listadoRestaurante.css">
 </head>
 <body>
-	<% if (docs){ %>
-	
-<%}else{%>
+	<div class="central-div">
+		<% if (restaurantes){ %>
+		<table>
+		  <thead>
+		    <tr>
+		      <th>ID</th>
+		      <th>Nombre</th>
+		      <th>Direccion</th>
+		      <th>Localizacion</th>
+		      <th>N. Telefono</th>
+		      <th>CP</th>
+		      <th>Categorias</th>
+		      <th>Coordenadas</th>
+		      <th id="horarios">Horarios</th>
+		    </tr>
+		  </thead>
+		  <tbody>
+		  	
+				<%restaurantes.forEach(function(data){%>
+				<tr>
+					<td>	<%= data._id%> </td>
+					<td>	<%= data.name%> </td>
+					<td>	<%= data.location%> </td>
+					<td>	<%= data.poblation%> </td>
+					<td>	<%= data.pnumber%> </td>
+					<td>	<%= data.cp%> </td>
+					<td>	<%= data.categories%> </td>
+					<td>	<%= JSON.stringify(data.coordenades)%> </td>
+					<td id="dataHorarios">
+					<!-- Preparacion del string de horario -->
+					<% var hor=JSON.stringify(data.horari)%>
+					<% hor= hor.replace('[{"diaSetmana":1,', 'Lunes [') %>
+					<% hor= hor.replace('{"diaSetmana":2,', 'Martes [') %>
+					<% hor= hor.replace('{"diaSetmana":3,', 'Miercoles [') %>
+					<% hor= hor.replace('{"diaSetmana":4,', 'Jueves [') %>
+					<% hor= hor.replace('{"diaSetmana":5,', 'Viernes [') %>
+					<% hor= hor.replace('{"diaSetmana":6,', 'Sabado [') %>
+					<% hor= hor.replace('{"diaSetmana":7,', 'Domingo [') %>
+					<% var days= hor.split("},") %>
+						<% for(let day of days){ %>
+							<p>	
+
+							<% day= day.replace('horaIni":"closed","horaFi":"closed"', ' CERRADO '); %> 
+							<% day= day.replace(",", ' - '); %> 
+							<% day= day.replace(/"/g, ''); %> 
+							<% day= day.replace("}]", ''); %> 
+							<% day= day.replace('horaIni', 'Abre '); %> 
+							<% day= day.replace('horaFi', 'Cierra '); %> 
+
+							<%= day %>
+							</p>	
+
+						
+						<% };%>
+
+			 		</td>
+		 		</tr>
+				<%});%>
+			
+		</tbody>
+	</table>
+	</div>
+
+	<%}else{%>
 <h2>No hay datos</h2>
 <%}%>
+	
 
 
 </body>

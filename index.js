@@ -34,14 +34,18 @@ app.post('/restaurantes', function (req, res) {
   var nom = req.body.name;
   var poblacio= req.body.poblation;
   var categories= req.body.category;
-  categories=JSON.parse(categories);
+  //categories=JSON.parse(categories);
   var horari=req.body.schedule;
-  horari=JSON.parse(horari);
+  //horari=JSON.parse(horari);
   var coordinates= req.body.coordinates;
-  coordinates=JSON.parse(coordinates);
+  //coordinates=JSON.parse(coordinates);
   var direccio = req.body.location;
   var telefon = req.body.pnumber;
   var cp= req.body.cp;
+  if (categories!=undefined && horari!=undefined && coordinates!=undefined) {
+    horari=JSON.parse(horari);
+    categories=JSON.parse(categories);
+    coordinates=JSON.parse(coordinates);
 
   var restaurantObj = { name:nom, location:direccio, poblation:poblacio ,pnumber:telefon, cp:cp, categories:categories, coordenades:coordinates, horari:horari };
   var db = mongoClient.db("RestaurantDB");
@@ -50,25 +54,57 @@ app.post('/restaurantes', function (req, res) {
         res.render("result",{msg:"KO"});
         return;
     }else{
-        res.render("result",{msg:"OK"});
+        //res.render("result",{msg:"OK"});
+        res.redirect('/menu/?msg=OK');
+
     }
 
   });
+  }else{
+            res.render("result",{msg:"First"});
 
+  }
 });
-app.get('/restaurantes', function (req, res) {
-  res.render('restaurantes');
 
-});
+
 // view: llistat elements
 
 app.get('/', function (req, res) {
-        res.render("result",{msg:"First"});
+    console.log("here again")
+    res.redirect('/menu');
+        //res.render("result",{msg:"First"});
 });
 
-app.post('/', function (req, res) {
+
+app.post('/menu', function (req, res) {
     var accionMenu = req.body.menuAction;
     var busqueda= req.body.search;
-    res.render( 'restaurantes');
+    console.log(accionMenu+"funciono");
 
+    var db = mongoClient.db("RestaurantDB");
+    var opcions = {};
+    var query = {};
+
+    if (accionMenu=="crea") {
+        res.render( 'restaurantes');
+    }
+    else if (accionMenu=="busca") {
+        res.render('result',{search:busqueda});
+    }
+    else if(accionMenu=="llista"){
+        db.collection('Restaurant').find().toArray(function( err, docs ) {
+        if( err ) {
+            res.render( 'listadoRestaurante', {msg:"error a la query"} );
+            return;
+        }
+        res.render( 'listadoRestaurante', {"restaurantes":docs} );
+    });
+    }
+});
+
+
+app.get('/menu', function (req, res) {
+    var msg=req.query.msg;
+    console.log(msg);
+    res.render("result",{msg:msg});
 });
