@@ -31,6 +31,7 @@ mongo.connect(dbConStr, function( err, _client ) {
 
 });
 app.post('/restaurantes', function (req, res) {
+
   var nom = req.body.name;
   var poblacio= req.body.poblation;
   var categories= req.body.category;
@@ -42,18 +43,32 @@ app.post('/restaurantes', function (req, res) {
   var direccio = req.body.location;
   var telefon = req.body.pnumber;
   var cp= req.body.cp;
+  var id= req.body.retrievedId;
+
+  //console.log(getId().then(autoincrementId()));
+
+  
+
+
+
   if (categories!=undefined && horari!=undefined && coordinates!=undefined) {
     horari=JSON.parse(horari);
     categories=JSON.parse(categories);
     coordinates=JSON.parse(coordinates);
 
-  var restaurantObj = { name:nom, location:direccio, poblation:poblacio ,pnumber:telefon, cp:cp, categories:categories, coordenades:coordinates, horari:horari };
+  var restaurantObj = { _id:id,name:nom, location:direccio, poblation:poblacio ,pnumber:telefon, cp:cp, categories:categories, coordenades:coordinates, horari:horari };
   var db = mongoClient.db("RestaurantDB");
+  
+
+
+
   db.collection("Restaurant").insertOne(restaurantObj, function(err, result) {
+  
     if (err) {
-        res.render("result",{msg:"KO"});
+        res.redirect('/menu/?msg=KO');
         return;
     }else{
+        autoincrementId();
         //res.render("result",{msg:"OK"});
         res.redirect('/menu/?msg=OK');
 
@@ -70,8 +85,9 @@ app.post('/restaurantes', function (req, res) {
 // view: llistat elements
 
 app.get('/', function (req, res) {
-    console.log("here again")
+
     res.redirect('/menu');
+    
         //res.render("result",{msg:"First"});
 });
 
@@ -81,12 +97,23 @@ app.post('/menu', function (req, res) {
     var busqueda= req.body.search;
     console.log(accionMenu+"funciono");
 
+
     var db = mongoClient.db("RestaurantDB");
     var opcions = {};
     var query = {};
+    var db = mongoClient.db("RestaurantDB");
+    db.collection('counters').findOne()
+
 
     if (accionMenu=="crea") {
-        res.render( 'restaurantes');
+        db.collection('counters').find().toArray(function( err, docs ) {
+        if( err ) {
+            res.render( 'restaurantes');
+            return;
+        }
+        res.render( 'restaurantes', {"restId":docs} );
+    });
+       
     }
     else if (accionMenu=="busca") {
         res.render('result',{search:busqueda});
@@ -98,7 +125,7 @@ app.post('/menu', function (req, res) {
             return;
         }
         res.render( 'listadoRestaurante', {"restaurantes":docs} );
-    });
+        });
     }
 });
 
@@ -108,3 +135,27 @@ app.get('/menu', function (req, res) {
     console.log(msg);
     res.render("result",{msg:msg});
 });
+function autoincrementId(){
+    var db = mongoClient.db("RestaurantDB");
+    
+    
+    var seqdoc=db.collection('counters').findOneAndUpdate(
+            {_id: "productid"} ,
+            { $inc: { sequence_value: 1 } },
+            {new : true}
+ 
+        );
+
+    return seqdoc;
+    
+    };
+function getId(){
+    var db = mongoClient.db("RestaurantDB");
+    var id= db.collection('counters').findOne();
+    return id;
+}
+
+
+
+
+

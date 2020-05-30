@@ -1,0 +1,32 @@
+.central-div {
+  text-align: center;
+  background-color: #FFDC00;
+  width: 80%;
+  height: auto;
+  margin: 0 auto;
+  background-color: rgba(255, 255, 255, 0.77);
+  border-radius: 0.25em;
+  overflow: hidden;
+  margin: 8em auto 0;
+  box-shadow: 0 0 30px -5px rgba(0, 0, 0, 0.5);
+}
+.central-div h1{
+  color:black;
+  margin-block-start: 0 !important;
+}
+* {
+   box-sizing: border-box;
+   transition: all 0.25s cubic-bezier(0.37, 0, 0.45, 0.99);
+}
+ *:before, *:after {
+   box-sizing: inherit;
+}
+body {
+  min-height: 10em;
+  height: 100vh;
+  background-image: url(http://localhost:5000/img/background/back1.jpg);
+  background-size: cover;
+  background-position: center top;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
+  line-height: 1.75;
+}

@@ -113,6 +113,14 @@
 		<input type="text" name="category" id="hidden-category"style="display:none;">
 		<input type="text" name="schedule" id="hidden-schedule"style="display:none;">
 		<input type="text" name="coordinates" id="hidden-coordinates"style="display:none;">
+		<% if (restId){ %>
+		<%restId.forEach(function(data){%>
+		<input type="text"  name="retrievedId" id="retrievedId"style="display:none;"
+		value='<%= data.sequence_value;%>'>
+
+		<%});%>
+		<% };%>
+
 		<button id="actualizar" class="button">+</button>
 		<br>
 		<input type="submit" class="form__button button" name="Enviar">
