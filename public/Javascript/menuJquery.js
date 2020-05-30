@@ -5,12 +5,13 @@ $( document ).ready(function() {
 		var parrafo= $(".hidden-msg").find("label")
 		var texto=$(".hidden-msg").find("label").text();
 		var clase="";
-    console.log(texto)
+		
+    	console.log(texto)
 		if (texto!=""){
 			if (parrafo.attr('id')=="just-ok") {
 				clase="success-msg";
-			}else{
-				clase="error-msg"
+			}else if(parrafo.attr('id')=="just-ko"){
+				clase="error-msg";
 			}
 			$("body").prepend('<div class="'+clase+'"> <label>'+ texto +'</label> </div>')
 		}

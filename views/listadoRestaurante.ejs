@@ -32,12 +32,20 @@
 					<td>	<%= data.pnumber%> </td>
 					<td>	<%= data.cp%> </td>
 					<td>	<%= data.categories%> </td>
-					<td>	<%= JSON.stringify(data.coordenades)%> </td>
+					<td>	
+							<% var coor= JSON.stringify(data.coordenades)%>
+							<% coor= coor.replace(/"/g, ''); %> 
+							<% coor= coor.replace('{', ''); %> 
+							<% coor= coor.replace('}', ''); %> 
+							<%= coor %> 
+
+
+					</td>
 					<td id="dataHorarios">
 					<!-- Preparacion del string de horario -->
 					<% var hor=JSON.stringify(data.horari)%>
 					<% hor= hor.replace('[{"diaSetmana":1,', 'Lunes [') %>
-					<% hor= hor.replace('{"diaSetmana":2,', 'Martes [') %>
+					<% hor= hor.replace('{"diaSetmana":2,', ' Martes [') %>
 					<% hor= hor.replace('{"diaSetmana":3,', 'Miercoles [') %>
 					<% hor= hor.replace('{"diaSetmana":4,', 'Jueves [') %>
 					<% hor= hor.replace('{"diaSetmana":5,', 'Viernes [') %>
@@ -54,7 +62,7 @@
 							<% day= day.replace('horaIni', 'Abre '); %> 
 							<% day= day.replace('horaFi', 'Cierra '); %> 
 
-							<%= day %>
+							<%= day +"]" %>
 							</p>	
 
 						

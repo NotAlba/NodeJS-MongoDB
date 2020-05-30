@@ -153,8 +153,8 @@ app.post('/menu', function (req, res) {
 
 
 app.get('/menu', function (req, res) {
-    var msg=req.query.msg;
-    res.render("result",{msg:msg});
+   
+    res.render("result");
 });
 function autoincrementId(){
     var db = mongoClient.db("RestaurantDB");
@@ -199,7 +199,6 @@ app.post('/editorHorario', function (req, res) {
             function(err, result) {
   
     if (err) {
-        console.log(err);
         res.redirect('/menu/?msg=KO');
         return;
     }else{
