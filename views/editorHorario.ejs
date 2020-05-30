@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+		<link rel='stylesheet' type='text/css' href="http://localhost:5000/Style/editarHorarioStyle.css">
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+		<script src="http://localhost:5000/Javascript/jqueryHorarios.js"></script>
+</head>
+<body>
+	<div class="central-div">
+		
+
+		<% if (restaurante.length>0){ %>
+			<% var hor=JSON.stringify(restaurante[0].horari)%>
+			<% hor= hor.replace(/horaIni":"closed","horaFi":"closed"/g, ' CERRADO'); %>
+			<% hor= hor.replace(/",/g, '-'); %>
+
+			 <% hor= hor.replace(/"horaIni":"/g, ''); %>
+			 <% hor= hor.replace(/"horaFi":"/g, ''); %>
+			 <% hor= hor.replace(/{/g, ''); %>
+			<% hor= hor.replace(/"diaSetmana":[0-9],/g, '') %>
+			<% hor= hor.replace(/"/g, ''); %>
+			<% hor= hor.replace(/}]/g, ''); %>
+			<% hor= hor.replace("[", ''); %>
+
+
+
+
+			<% var days= hor.split("},") %>
+
+			<% var daysName=["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"]%>
+			<form id="nuevoHorario" action="/editorHorario" method="post">
+
+			<div id=timetable>
+				<h3>Horarios de :
+		  		<%= restaurante[0].name%>
+				</h3>
+
+
+			<% for (let i=0; days.length>i; i++){ %>
+				
+				
+
+
+				<div class="day" id="<%=i+1%>">
+					<label class="d-label"><%= daysName[i] %> </label>
+					<label class="open"><b>[</b> Abre:</label>
+					<% if (days[i]==' CERRADO'){ %>
+					<input class="time-input" value="12:00" type="text"></input>
+					<label class="close">| Cierra:</label>
+					<input class="time-input" value="00:00" type="text"></input>
+					<% }else{ %>
+						<% var daySplit=days[i].split("-") %>
+						<input class="time-input" value="<%=daySplit[0]%>" type="text"></input>
+						<label class="close">| Cierra:</label>
+						<input class="time-input" value="<%=daySplit[1]%>" type="text"></input>
+					<% }; %>
+					<label class="close"><b>]</b> Cerrado </label>
+					<% if (days[i]==' CERRADO'){ %>
+						<input type="checkbox" checked="checked" class="check"></input>
+					<% }else{ %>
+						<input type="checkbox" class="check"></input>
+					<% }; %>			
+
+				</div>
+				
+				
+			<% }; %>
+			
+				
+
+
+			</div>
+			<input type="text" name="schedule" id="hidden-schedule"style="display:none;">
+			<input type="text" name="id" id="hidden-id" value="<%=restaurante[0]._id %>" style="display:none;">
+			<input type="submit" class="form__button button" name="Enviar">
+
+		</form>
+		  	
+
+				
+		<%}else{%>
+			<p>No se han encontrado datos</p>
+		<% };%>
+
+			
+	</div>
+	
+
+
+</body>
+</html>

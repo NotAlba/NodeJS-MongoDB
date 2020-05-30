@@ -45,7 +45,6 @@ app.post('/restaurantes', function (req, res) {
   var cp= req.body.cp;
   var id= req.body.retrievedId;
 
-  //console.log(getId().then(autoincrementId()));
 
   
 
@@ -82,8 +81,7 @@ app.post('/restaurantes', function (req, res) {
 });
 
 
-// view: llistat elements
-
+//Redireccio de l'arrel a menu
 app.get('/', function (req, res) {
 
     res.redirect('/menu');
@@ -92,10 +90,13 @@ app.get('/', function (req, res) {
 });
 
 
+//Post de MENU per a fer la direccio a la view seleccionada
 app.post('/menu', function (req, res) {
     var accionMenu = req.body.menuAction;
     var busqueda= req.body.search;
-    console.log(accionMenu+"funciono");
+    var tipoBusqueda= req.body.searchBy;
+    console.log(tipoBusqueda);
+    console.log(busqueda);
 
 
     var db = mongoClient.db("RestaurantDB");
@@ -103,9 +104,11 @@ app.post('/menu', function (req, res) {
     var query = {};
     var db = mongoClient.db("RestaurantDB");
     db.collection('counters').findOne()
-
+    console.log(accionMenu);
 
     if (accionMenu=="crea") {
+        //Avans de redireccionar a la pagina de creacio li pasem el id d'aquesta forma
+        //evitem problemas amb les promeses
         db.collection('counters').find().toArray(function( err, docs ) {
         if( err ) {
             res.render( 'restaurantes');
@@ -116,7 +119,26 @@ app.post('/menu', function (req, res) {
        
     }
     else if (accionMenu=="busca") {
-        res.render('result',{search:busqueda});
+        if (tipoBusqueda=="_id") {
+            db.collection('Restaurant').find({_id:busqueda}).toArray(function( err, docs ) {
+            if( err ) {
+                console.log("dont working")
+            res.render( 'editorHorario' );
+                return;
+            }
+            res.render( 'editorHorario', {"restaurante":docs} );
+            });
+        }else if(tipoBusqueda=="name"){
+            
+            db.collection('Restaurant').find({name: new RegExp(busqueda, 'i')}).toArray(function( err, docs ) {
+            if( err ) {
+            res.render( 'editorHorario' );
+                return;
+            }
+            
+            res.render( 'editorHorario', {"restaurante":docs} );
+            });
+        }
     }
     else if(accionMenu=="llista"){
         db.collection('Restaurant').find().toArray(function( err, docs ) {
@@ -132,7 +154,6 @@ app.post('/menu', function (req, res) {
 
 app.get('/menu', function (req, res) {
     var msg=req.query.msg;
-    console.log(msg);
     res.render("result",{msg:msg});
 });
 function autoincrementId(){
@@ -154,6 +175,47 @@ function getId(){
     var id= db.collection('counters').findOne();
     return id;
 }
+
+
+app.post('/editorHorario', function (req, res) {
+
+  var id = req.body.id;
+  var horari=req.body.schedule;
+  
+
+  if ( horari!=undefined ) {
+    horari=JSON.parse(horari);
+   
+  //var restaurantObj = { _id:id,name:nom, location:direccio, poblation:poblacio ,pnumber:telefon, cp:cp, categories:categories, coordenades:coordinates, horari:horari };
+  var db = mongoClient.db("RestaurantDB");
+  
+
+  db.collection('counters').findOneAndUpdate(
+            {_id: "productid"} ,
+            { $inc: { sequence_value: 1 } },
+            {new : true},
+            function(err, result) {
+  
+    if (err) {
+        res.redirect('/menu/?msg=KO');
+        return;
+    }else{
+        autoincrementId();
+        //res.render("result",{msg:"OK"});
+        res.redirect('/menu/?msg=OK');
+
+    }
+
+  }
+ 
+        );
+
+  
+  }else{
+            res.render("result",{msg:"First"});
+
+  }
+});
 
 
 

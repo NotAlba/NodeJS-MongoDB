@@ -30,3 +30,36 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto", "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans", "Helvetica Neue", sans-serif;
   line-height: 1.75;
 }
+#timetable{
+  width:100%;
+  overflow: auto;
+}
+#timetable p{
+  margin:0 !important;
+}
+.day .open,.close{
+   font-size: 0.75em;
+}
+.d-label{
+  font-size:0.9em;
+}
+.time-input{
+  width:12%;
+  color: #133e40;
+  border: 1px solid grey;
+  border-radius: 0.25em;
+  margin-bottom: 1em;
+}
+.button {
+   border: 0;
+   font-size: 1em;
+   color: #fff;
+   background-color: rgba(5, 127, 148, 0.88);
+   border-radius: 0.25em;
+   padding: 1em;
+   margin-bottom: 1em;
+}
+
+ .button:hover, .button:focus {
+   background-color: #c24528;
+}
