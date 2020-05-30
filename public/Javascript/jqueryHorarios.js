@@ -48,7 +48,7 @@ function getValueOfSchedule(){
 		$("#hidden-schedule").val($("#hidden-schedule").val()+dia);
 });
 }
-$(".form__button").on("click", function(e){
+$("#submitButton").on("click", function(e){
 	event.preventDefault()
 	getValueOfSchedule();
 
@@ -56,8 +56,13 @@ $(".form__button").on("click", function(e){
 	var newschedule = "["+ $("#hidden-schedule").val() + "]"
 	$("#hidden-schedule").val(newschedule);
 	console.log("cacaca")
+					console.log(	$("#hidden-schedule").val())
+
 	setTimeout(function(){
-		$("#horarioNuevo").submit()
+
+		$("#nuevoHorario").submit();
+
+
 	},1000)
 
 

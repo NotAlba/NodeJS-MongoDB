@@ -29,7 +29,6 @@
 			<% var days= hor.split("},") %>
 
 			<% var daysName=["Lunes","Martes","Miercoles","Jueves","Viernes","Sabado","Domingo"]%>
-			<form id="nuevoHorario" action="/editorHorario" method="post">
 
 			<div id=timetable>
 				<h3>Horarios de :
@@ -67,13 +66,14 @@
 				
 			<% }; %>
 			
-				
+		
 
+		<form id="nuevoHorario" action="/editorHorario" method="post">
 
-			</div>
+			
 			<input type="text" name="schedule" id="hidden-schedule"style="display:none;">
 			<input type="text" name="id" id="hidden-id" value="<%=restaurante[0]._id %>" style="display:none;">
-			<input type="submit" class="form__button button" name="Enviar">
+			<input type="submit" id="submitButton" class="form__button button" name="Enviar">
 
 		</form>
 		  	

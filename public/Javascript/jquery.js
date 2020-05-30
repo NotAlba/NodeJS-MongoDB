@@ -154,7 +154,7 @@ $(".form__button").on("click", function(e){
 
 
 
-})
+});
 
 
 $('input[type="checkbox"]').click(function(){

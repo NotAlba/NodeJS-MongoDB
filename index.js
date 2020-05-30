@@ -181,26 +181,29 @@ app.post('/editorHorario', function (req, res) {
 
   var id = req.body.id;
   var horari=req.body.schedule;
+
   
 
   if ( horari!=undefined ) {
     horari=JSON.parse(horari);
+    console.log(id)
+    console.log(horari)
    
   //var restaurantObj = { _id:id,name:nom, location:direccio, poblation:poblacio ,pnumber:telefon, cp:cp, categories:categories, coordenades:coordinates, horari:horari };
   var db = mongoClient.db("RestaurantDB");
   
 
-  db.collection('counters').findOneAndUpdate(
-            {_id: "productid"} ,
-            { $inc: { sequence_value: 1 } },
-            {new : true},
+  db.collection('Restaurant').findOneAndUpdate(
+            {_id: id} ,
+            {$set:{horari: horari}},
             function(err, result) {
   
     if (err) {
+        console.log(err);
         res.redirect('/menu/?msg=KO');
         return;
     }else{
-        autoincrementId();
+        
         //res.render("result",{msg:"OK"});
         res.redirect('/menu/?msg=OK');
 
