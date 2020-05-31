@@ -10,13 +10,18 @@
 <body>
 
 <div class="hidden-msg" style="display:none">
-	<% if (msg=="OK"){ %>
-	<label id="just-ok">Registro añadido correctamente</label>
-	<%}else if(msg=="KO"){%>
-	<label id="just-ko">ERROR: No se pudo insertar</label>
-	<%}else if(msg==""||msg=="First"){%>
-<%}else{%>
-<%}%>
+	<% if (typeof msg !== 'undefined'){ %>
+
+		<% if (msg=="OK"){ %>
+		<label id="just-ok">Registro añadido correctamente</label>
+		<%}else if(msg=="KO"){%>
+		<label id="just-ko">ERROR: No se pudo insertar</label>
+		<%}else if(msg==""||msg=="First"){%>
+	<%}else{%>
+	<label id="error-message">ERROR: <%=msg %></label>
+	<%}%>
+	<%}%>
+	
 </div>
 <div class="central-div">
 	<div class="l-col form-box__form">
